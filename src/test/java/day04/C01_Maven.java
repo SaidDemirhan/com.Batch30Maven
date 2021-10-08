@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class C01_Maven {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //1- https://www.amazon.com/ sayfasina gidelim
         //2- arama kutusunu locate edelim
         //3- “Samsung headphones” ile arama yapalim
@@ -44,19 +44,23 @@ public class C01_Maven {
         System.out.println(sonucYazisiElementi.getText());
         //5- Ilk urunu tiklayalim
 
-        WebElement element=driver.findElement(By.xpath("(//span[@class='a-size-medium a-color-base a-text-normal])[1]"));
-        element.click();
+        //WebElement element=driver.findElement(By.xpath("(//span[@class='a-size-medium a-color-base a-text-normal'])[1]"));
+        //element.click();
+        //veya
+        driver.findElement(By.xpath("(//span[@class='a-size-medium a-color-base a-text-normal'])[1]")).click();
 
-
+        Thread.sleep(2000);
         //6- Sayfadaki tum basliklari yazdiralim
         driver.navigate().back();
-        List<WebElement> urunlerListesi=driver.findElements(By.xpath("//div[@class='a-section a-spacing-small a-spacing-top-small']"));
+        List<WebElement> urunlerListesi=driver.findElements(By.xpath("//span[@class='a-size-medium a-color-base a-text-normal']"));
 
         for (WebElement each:urunlerListesi
              ) {
             System.out.println(each.getText());
 
         }
+
+        driver.close();
 
 
     }

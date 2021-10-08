@@ -9,7 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.concurrent.TimeUnit;
 
 public class C03_Test02 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         //1. http://zero.webappsecurity.com sayfasina gidin
         //2. Signin buttonuna tiklayin
@@ -38,18 +38,31 @@ public class C03_Test02 {
         WebElement ad= driver.findElement(By.cssSelector("#user_login"));
         ad.sendKeys("username");
         //4. Password alanine “password” yazdirin
-        WebElement sifre= driver.findElement(By.cssSelector("#user_password"));
-        sifre.sendKeys("password");
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id='user_password']")).sendKeys("password");
+
         //5. Sign in buttonuna tiklayin
         driver.findElement(By.name("submit")).click();
 
-        driver.findElement(By.xpath("//*[@id='primary-button']"));
-        //6. Pay Bills sayfasina gidin
+        driver.get("http://zero.webappsecurity.com");
 
+        driver.findElement(By.xpath("//strong[text()='Online Banking']")).click();
+        //6. Pay Bills sayfasina gidin
+        driver.findElement(By.cssSelector("#pay_bills_link")).click();
         //7. amount kismina yatirmak istediginiz herhangi bir miktari yazin
+        driver.findElement(By.cssSelector("#sp_amount")).sendKeys("1000");
         //8. tarih kismina “2020-09-10” yazdirin
+        driver.findElement(By.cssSelector("#sp_date")).sendKeys("2021-09-10");
         //9. Pay buttonuna tiklayin
+        driver.findElement(By.cssSelector("#pay_saved_payees")).click();
         //10. “The payment was successfully submitted.” mesajinin ciktigini control edin
+        WebElement basariliYazisiElementi= driver.findElement(By.cssSelector("#alert_content"));
+        if (basariliYazisiElementi.isDisplayed()){
+            System.out.println("PASSED");
+        }else
+            System.out.println("failed");
+
+        driver.close();
     }
 
 }
